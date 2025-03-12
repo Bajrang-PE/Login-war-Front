@@ -25,7 +25,6 @@ const Facilities = () => {
             const graphList = ['813', '814', '815', '804']
             const kpidt = widgetData?.filter((wd) => graphList?.includes(wd?.rptId));
             setGraphWidgets(kpidt)
-            console.log(kpidt,'kpidt')
         }
     }, [widgetData])
 
@@ -35,7 +34,6 @@ const Facilities = () => {
         try {
             const data = await fetchQueryData(fc?.queryVO);
             const dtlen = Object?.keys(data[0])
-            // console.log(data, 'bgdata')
             if (dtlen?.length === 3) {
                 setGraphData(
                     data.map((item) => ({
