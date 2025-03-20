@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import DvdmsDashboard from './pages/DvdmsDashboard';
+import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
+import ChangeUserDetails from './pages/ChangeUserDetails';
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dvdms-central-dashboard" element={<DvdmsDashboard />} />
+          <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
+          <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
         </Routes>
       </Router>
     </>

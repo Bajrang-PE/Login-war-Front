@@ -146,7 +146,7 @@ export const stateData = [
 
     { stateName: "Telangana", imgUrl: "https://uatcdash.dcservices.in/HIS/hisglobal/CDBTemplate_V_3/Images/tel.jpg", link: "https://tsscm.dcservices.in/DWH_TELANGANA/startup/loginAction" },
 
-    { stateName: "Jammu & Kashmir", imgUrl: null, link: "https://jkdvdms.in/IMCS/hissso/loginLogin.imcs" },
+    { stateName: "Jammu & Kashmir", imgUrl: "https://uatcdash.dcservices.in/HIS/hisglobal/bootstrap/img/jnk.jpg", link: "https://jkdvdms.in/IMCS/hissso/loginLogin.imcs" },
 
     { stateName: "Maharashtra", imgUrl: "https://uatcdash.dcservices.in/HIS/hisglobal/CDBTemplate_V_3/Images/mh.jpg", link: "https://dwhphd.dcservices.in/DWH_PHD_OPEN/startup/loginAction" },
 

@@ -14,7 +14,7 @@ const Functionalities = () => {
                     <h2 className='home-headings'>Functionalities</h2>
                     <h5 className="border-btm"></h5>
                     <br />
-                    <h5 style={{ color: "grey" }}>Central Dashboard gives information under
+                    <h5 style={{ color: "#000e4e" }}>Central Dashboard gives information under
                         following categories</h5>
                 </div>
                 </div>

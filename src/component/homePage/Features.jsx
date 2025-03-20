@@ -12,7 +12,7 @@ const Features = () => {
                     <h2 className='home-headings'>Features</h2>
                     <h5 className="border-btm"></h5>
                     <br />
-                    <h5 style={{ color: "grey" }}>Central Dashboard is an easy to read user
+                    <h5 style={{ color: "#000e4e" }}>Central Dashboard is an easy to read user
                         interface, provides an array of visualisation involving tabular
                         and various graphical representation of the current status
                         (snapshot) and historical trends of key performance indicators to

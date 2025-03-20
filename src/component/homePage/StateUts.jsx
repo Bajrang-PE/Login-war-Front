@@ -14,7 +14,7 @@ const StateUts = () => {
                     <h2 className='home-headings'>State/UT DVDMS</h2>
                     <h5 className="border-btm"></h5>
                     <br />
-                    <h5 style={{ color: "grey" }}>Drugs and Vaccines Distribution System
+                    <h5 style={{ color: "#000e4e" }}>Drugs and Vaccines Distribution System
                         (DVDMS) is a web based supply chain management application deals
                         with Purchase, Inventory Management & Distribution of various
                         drugs, sutures and surgical items to various Regional/District

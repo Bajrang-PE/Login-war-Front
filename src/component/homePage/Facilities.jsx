@@ -111,7 +111,7 @@ const Facilities = () => {
             ))}
 
 
-            <div id="note" className="col-md-12 pl-2 mt-4">
+            <div id="note" className="col-md-12 pl-2 mt-4" style={{color:"#000e4e"}}>
                 <h6>* The counts / values may differ with other portals as
                     they are specific to facilities onboarded with DVDMS Central
                     Dashboard</h6>
