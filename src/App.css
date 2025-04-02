@@ -153,7 +153,7 @@
   color: white !important;
 }
 
-.new-btn-blue{
+.new-btn-blue {
   font-size: 1rem !important;
   border: none !important;
   cursor: pointer;
@@ -165,7 +165,8 @@
   color: white !important;
 }
 
-.header-image:hover,.new-btn-blue:hover {
+.header-image:hover,
+.new-btn-blue:hover {
   /* transform: scale(0.95); */
   animation: pulse-animation 1s infinite;
 }
@@ -214,7 +215,7 @@
 .data-text {
   border-radius: 8px !important;
   margin: 8px 0px !important;
-  padding: 10px 0px !important;
+  padding: 10px 5px !important;
   box-shadow: 2px 2px 9px rgba(0, 0, 0, .13);
   color: #f5f5f5 !important;
   font-size: 18px;
@@ -506,6 +507,11 @@ label {
   .change-pass-container {
     padding: 1% 5% !important;
   }
+
+  .dialog-min {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }
 
 .heading-text {
@@ -516,18 +522,20 @@ label {
 }
 
 .mega-menu {
-  width: 92vw !important; 
+  /* width: 92vw !important;
   left: auto !important;
-  right: 0 !important;
+  right: 0 !important; */
+  left: 5%;
+  right: 5%;
   position: absolute !important;
   top: 100% !important;
-  background-color: white; 
-  z-index: 1050; 
+  background-color: white;
+  z-index: 1050;
   padding: 10px !important;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  max-height: 90vh; 
-  overflow-y: auto; 
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .mega-menu .menu-hov a:hover {
@@ -540,7 +548,7 @@ label {
   border-radius: 4px !important;
 }
 
-.menu-hov{
+.menu-hov {
   padding: 5px;
 }
 
@@ -549,4 +557,9 @@ label {
   color: black !important;
   cursor: pointer;
   text-align: center;
+}
+
+.dialog-min {
+  padding-left: 5%;
+  padding-right: 5%;
 }

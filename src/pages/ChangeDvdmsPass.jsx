@@ -1,20 +1,67 @@
 import React, { useState } from 'react'
 import DashHeader from '../component/dashboard/DashHeader'
+import { fetchPostData } from '../utils/ApiHooks'
 
 const ChangeDvdmsPass = () => {
+
     const [values, setValues] = useState({
         "oldPassword": "", "newPassword": "", "confirmPassword": ""
     })
 
+    const [errors, setErrors] = useState({
+        "oldPasswordErr": "", "newPasswordErr": "", "confirmPasswordErr": ""
+    })
+
     const handleValueChange = (e) => {
         const { name, value } = e.target;
+        const errName = name + 'Err';
         if (name) {
             setValues({ ...values, [name]: value })
+            setErrors({ ...errors, [errName]: "" })
+        }
+    }
+
+    const saveChangePassword = (e) => {
+        e?.preventDefault();
+        let isValid = true;
+
+        if (!values?.oldPassword?.trim()) {
+            setErrors(prev => ({ ...prev, "oldPasswordErr": "Old password is required" }));
+            isValid = false;
+        }
+        if (!values?.newPassword?.trim()) {
+            setErrors(prev => ({ ...prev, "newPasswordErr": "New password is required" }));
+            isValid = false;
+        }
+        if (!values?.confirmPassword?.trim()) {
+            setErrors(prev => ({ ...prev, "confirmPasswordErr": "Confirm password is required" }));
+            isValid = false;
+        }
+        if (values?.newPassword?.trim() && values?.confirmPassword?.trim() && values?.newPassword !== values?.confirmPassword) {
+            setErrors(prev => ({ ...prev, "confirmPasswordErr": "Confirm password and new password should be same" }));
+            isValid = false;
+        }
+
+        if (isValid) {
+            const val = {
+                "userId": 10006,
+                "currentPassword": values?.oldPassword,
+                "username": 'deo',
+                "newPassword": values?.newPassword,
+            }
+            fetchPostData("/api/v1/change-password", val).then(data => {
+                if (data) {
+                        console.log(data, 'data')
+                } else {
+                    console.log("Request Failed!")
+                }
+            })
         }
     }
 
     const reset = () => {
-        setValues({ "oldPassword": "", "newPassword": "", "confirmPassword": "" })
+        setValues({ "oldPassword": "", "newPassword": "", "confirmPassword": "" });
+        setErrors({ "oldPasswordErr": "", "newPasswordErr": "", "confirmPasswordErr": "" });
     }
 
     return (
@@ -35,6 +82,11 @@ const ChangeDvdmsPass = () => {
                                 onChange={handleValueChange}
                                 value={values?.oldPassword}
                             />
+                            {errors?.oldPasswordErr &&
+                                <div className="required-input">
+                                    {errors?.oldPasswordErr}
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="form-group row" style={{ paddingBottom: "1px" }}>
@@ -49,6 +101,11 @@ const ChangeDvdmsPass = () => {
                                 onChange={handleValueChange}
                                 value={values?.newPassword}
                             />
+                            {errors?.newPasswordErr &&
+                                <div className="required-input">
+                                    {errors?.newPasswordErr}
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className="form-group row" style={{ paddingBottom: "1px" }}>
@@ -63,6 +120,11 @@ const ChangeDvdmsPass = () => {
                                 onChange={handleValueChange}
                                 value={values?.confirmPassword}
                             />
+                            {errors?.confirmPasswordErr &&
+                                <div className="required-input">
+                                    {errors?.confirmPasswordErr}
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -70,7 +132,7 @@ const ChangeDvdmsPass = () => {
                     </div>
 
                     <div className='text-center'>
-                        <button className='btn btn-sm new-btn-blue py-0'>
+                        <button className='btn btn-sm new-btn-blue py-0' onClick={(e) => saveChangePassword(e)}>
                             <i className="fa fa-save me-1"></i>
                             Save</button>
                         <button className='btn btn-sm new-btn-blue py-0' onClick={() => reset()}>  <i className="fa fa-broom me-1"></i>Clear</button>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BaseUrl = 'http://10.226.25.164:8024'; //pretiee
+const BaseUrl = 'http://10.226.25.164:8025'; //pritee
 // const BaseUrl = 'http://10.226.17.6:8024';  //BG
 // const BaseUrl = 'http://10.226.29.211:8025/';  //Disha
 
@@ -28,5 +28,6 @@ export const fetchPostData = async (url, data) => {
         return response.data;
     } catch (error) {
         console.log('API Error:', error);
+        return error?.response?.data;
     }
 };

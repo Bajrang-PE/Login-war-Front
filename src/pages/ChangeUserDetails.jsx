@@ -1,20 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DashHeader from '../component/dashboard/DashHeader'
 import InputSelect from '../component/InputSelect';
+import { LoginContext } from '../context/LoginContext';
 
 const ChangeUserDetails = () => {
+
+    const { getHintQuestionDrpData, hintQuestionDrpDt } = useContext(LoginContext);
 
     const [password, setPassword] = useState('');
     const [values, setValues] = useState({
         "username": "", "hintquestion": "", "answer": "", "mobileNo": "", "email": "", "parichayId": "", "defaultMenu": "",
-    })
+    });
 
     const handleValueChange = (e) => {
         const { name, value } = e.target;
         if (name) {
-            setValues({ ...values, [name]: value })
+            setValues({ ...values, [name]: value });
         }
     }
+
+    useEffect(() => {
+        if (hintQuestionDrpDt?.length === 0) {
+            getHintQuestionDrpData();
+        }
+    }, [])
 
     return (
         <>

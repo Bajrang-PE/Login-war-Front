@@ -1,4 +1,6 @@
 import { fetchPostData } from "./ApiHooks";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const fetchQueryData = async (queryVO = []) => {
     if (!Array.isArray(queryVO) || queryVO.length === 0) {
@@ -14,7 +16,7 @@ export const fetchQueryData = async (queryVO = []) => {
         }
   
         const requestBody = { query, params: {} };
-        const response = await fetchPostData("/hisutils/GenericApiQry", requestBody);
+        const response = await fetchPostData("http://10.226.25.164:8024/hisutils/GenericApiQry", requestBody);
   
         return response || [];
     } catch (error) {
@@ -22,3 +24,18 @@ export const fetchQueryData = async (queryVO = []) => {
         return [];
     }
   };
+
+  //FUNCTION TO MANAGE GLOBAL ALERTS
+export const ToastAlert = (message, type) => {
+    toast(message, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: type
+    });
+  }

@@ -10,9 +10,10 @@ import Footer from '../component/homePage/Footer'
 import Slider from '../component/Slider'
 import CmsLogin from '../component/homePage/CmsLogin'
 import { LoginContext } from '../context/LoginContext'
+import ForgotPassForm from '../component/homePage/ForgotPassForm'
 
 const HomePage = () => {
-    const { showCmsLogin, setShowCmsLogin } = useContext(LoginContext);
+    const { showCmsLogin, setShowCmsLogin, showForgotPass, setShowForgotPass } = useContext(LoginContext);
     const [showMoveToTop, setShowMoveToTop] = useState(false);
 
     useEffect(() => {
@@ -35,6 +36,7 @@ const HomePage = () => {
 
     const onCloseModal = () => {
         setShowCmsLogin(false);
+        setShowForgotPass(false);
     }
 
     return (
@@ -76,7 +78,10 @@ const HomePage = () => {
                 </div>
             </div>
             {showCmsLogin &&
-                    <CmsLogin isShow={showCmsLogin} onClose={onCloseModal} />
+                <CmsLogin isShow={showCmsLogin} onClose={onCloseModal} setShowForgotPass={setShowForgotPass}/>
+            }
+            {showForgotPass &&
+                <ForgotPassForm isShow={showForgotPass} onClose={onCloseModal} />
             }
 
         </div>

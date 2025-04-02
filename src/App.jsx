@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import DvdmsDashboard from './pages/DvdmsDashboard';
 import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
 import ChangeUserDetails from './pages/ChangeUserDetails';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
           <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
         </Routes>
+        <ToastContainer />
       </Router>
     </>
   )

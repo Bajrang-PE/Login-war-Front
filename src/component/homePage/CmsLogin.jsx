@@ -1,38 +1,90 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { fetchData } from '../../utils/ApiHooks';
+import { fetchData, fetchPostData } from '../../utils/ApiHooks';
+import { ToastAlert } from '../../utils/CommonFunction';
 
 
-const CmsLogin = ({ isShow, onClose }) => {
+const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
 
-    const [captchaImage, setCaptchaImage] = useState('');
+    const [captchaImage, setCaptchaImage] = useState(null);
     const [captchaInput, setCaptchaInput] = useState('');
     const [captchaToken, setCaptchaToken] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [errors, setErrors] = useState({
+        usernameErr: "", passwordErr: "", captchaInputErr: ""
+    })
 
     const handleChange = (e) => {
         const { value, name } = e.target;
 
         if (name === 'username') {
             setUsername(value)
+            setErrors({ ...errors, "usernameErr": "" })
         } else if (name === 'password') {
             setPassword(value)
+            setErrors({ ...errors, "passwordErr": "" })
         } else if (name === 'captchaInput') {
             setCaptchaInput(value)
+            setErrors({ ...errors, "captchaInputErr": "" })
         }
     }
 
     const fetchCaptchaData = () => {
-        fetchData('http://10.226.25.164:8025/api/v1/generateCaptcha').then(data => {
+        fetchData('/api/v1/generateCaptcha').then(data => {
             if (data) {
-                setCaptchaImage(data)
+                setCaptchaImage(data?.captchaImage);
+                setCaptchaToken(data?.captchaToken);
             } else {
-                console.error('Request failed')
-                setCaptchaImage('')
+                console.error('Request failed');
+                setCaptchaImage(null);
+                setCaptchaToken('');
             }
         })
+    }
+
+    const executeLogin = (e) => {
+
+        e.preventDefault();
+        let isValid = true;
+
+        if (!username.trim()) {
+            setErrors(prev => ({ ...prev, "usernameErr": "User name is required!" }))
+            isValid = false;
+        }
+        if (!password?.trim()) {
+            setErrors(prev => ({ ...prev, "passwordErr": "Password is required!" }))
+            isValid = false;
+        }
+        if (!captchaInput.trim()) {
+            setErrors(prev => ({ ...prev, "captchaInputErr": "Captcha is required!" }))
+            isValid = false;
+        }
+
+        if (isValid) {
+
+            const val = {
+                "userName": username,
+                "password": password,
+                "captcha": captchaInput,
+                "captchaToken": captchaToken
+            }
+            fetchPostData("/api/v1/login", val).then(data => {
+                if (data) {
+                    if(data?.data){
+                        console.log(data,'data')
+                        ToastAlert(data?.message,'success');
+                    }else{
+                        ToastAlert(data,'error')
+                    }
+                } else {
+                    console.log("Request Failed!")
+                    ToastAlert('login failed!','error')
+                }
+            })
+        }
     }
 
     useEffect(() => {
@@ -41,17 +93,17 @@ const CmsLogin = ({ isShow, onClose }) => {
 
 
     return (
-        <div>
+        <>
             <Modal show={isShow} onHide={onClose} size='sm'>
                 <Modal.Header closeButton className='p-2 datatable-header cms-login'>
                     <b><h5 className='mx-2 mt-1 px-1'>DVDMS Dashboard Login</h5></b>
                 </Modal.Header>
                 <Modal.Body className='px-2 py-0'>
                     <div className="ps-0 align-content-center m-3">
-                        <select class="form-control aliceblue-bg" id="DashboardFor" name='DashboardFor' placeholder="Select Program">
-                            <option value="1" selected="selected">Central Dashboard</option>
+                        <select className="form-control aliceblue-bg" id="DashboardFor" name='DashboardFor' placeholder="Select Program" defaultValue={'1'}>
+                            <option value="1">Central Dashboard</option>
                         </select>
-                    </div>
+                    </div>  
                     <div className="ps-0 align-content-center m-3">
                         <input
                             type="text"
@@ -62,6 +114,11 @@ const CmsLogin = ({ isShow, onClose }) => {
                             value={username}
                             onChange={handleChange}
                         />
+                        {errors?.usernameErr &&
+                            <div className="required-input">
+                                {errors?.usernameErr}
+                            </div>
+                        }
                     </div>
                     <div className="ps-0 align-content-center m-3">
                         <input
@@ -73,9 +130,13 @@ const CmsLogin = ({ isShow, onClose }) => {
                             value={password}
                             onChange={handleChange}
                         />
+                        {errors?.passwordErr &&
+                            <div className="required-input">
+                                {errors?.passwordErr}
+                            </div>
+                        }
                     </div>
                     <div className="ps-0 align-content-center mx-3 my-1">
-                        {/* <img className='border-warning border rounded m-1' src="https://uatcdash.dcservices.in/CDDB/hissso/captchaLoginV3.cwh" alt="captcha" /> */}
                         <img className='border-warning border rounded m-1 w-75' src={captchaImage} alt="captcha" />
                         <button className='btn btn-primary btn-sm' onClick={() => { fetchCaptchaData() }}> <i className="fa fa-refresh" style={{ color: "#FBC02D" }}></i></button>
                     </div>
@@ -89,17 +150,22 @@ const CmsLogin = ({ isShow, onClose }) => {
                             value={captchaInput}
                             onChange={handleChange}
                         />
+                        {errors?.captchaInputErr &&
+                            <div className="required-input">
+                                {errors?.captchaInputErr}
+                            </div>
+                        }
                     </div>
                     <div className="ps-0 align-content-center mt-4 mb-3 mx-4">
-                        <Link>Forgot Password ?</Link>
+                        <Link to={'/'} onClick={() => setShowForgotPass(true)}>Forgot Password ?</Link>
                     </div>
 
-                    <button className='btn cms-login-btn w-100 mb-1'>
+                    <button className='btn cms-login-btn w-100 mb-1' onClick={executeLogin}>
                         <b> <span>Login</span></b>
                     </button>
                 </Modal.Body>
             </Modal>
-        </div>
+        </>
     )
 }
 

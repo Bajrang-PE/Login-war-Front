@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FeedbackForm from './FeedbackForm';
 import { stateData } from '../../localData/HomeData';
 
 const DashHeader = () => {
-    const [showFeedback, setShowFeedback] = useState(false)
+    const [showFeedback, setShowFeedback] = useState(false);
+    const [activeDropdown, setActiveDropdown] = useState(null);
 
     const onClose = () => {
         setShowFeedback(false)
     }
+
+    // const handleDropdown = (id) => {
+    //     const ele = document.getElementById(id);
+    //     console.log(ele?.classList, 'ele')
+    //     if (ele) {
+    //         if (ele?.classList.contains('show')) {
+    //             ele?.classList.remove('show')
+    //         } else {
+    //             ele?.classList.add('show')
+    //         }
+    //     }
+    // }
+
+    const handleDropdown = (id) => {
+        setActiveDropdown((prev) => (prev === id ? null : id));
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.dropdown') && !event.target.closest('.mega-menu')) {
+                setActiveDropdown(null);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     return (
         <div className='dashboard-header-nav'>
@@ -26,42 +55,21 @@ const DashHeader = () => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" onClick={() => handleDropdown('dropmenulinks')}>
                             <a className="nav-link text-white fs-15" href="#" id="menuDropdown" role="button" data-bs-toggle="dropdown">
                                 <i className="fa fa-bars"></i> MENU
                             </a>
-                            <ul className="dropdown-menu dropdown-menu-end">
-                                <li><a className="dropdown-item" href="#">Dashboard</a></li>
-                                <li><a className="dropdown-item" href="#">Reports</a></li>
-                                <li><a className="dropdown-item" href="#">Settings</a></li>
-                            </ul>
                         </li>
 
-                        <li className="nav-item dropdown">
-                            <a className="nav-link text-white fs-15" href="#" id="stateLinksDropdown" role="button" data-bs-toggle="dropdown">
+                        <li className="nav-item dropdown" onClick={() => handleDropdown('stateLinksDropdown')}>
+                            <a className="nav-link text-white fs-15" href="#" id="stateLinks" role="button" data-bs-toggle="dropdown">
                                 <i className="fa fa-external-link-alt"></i> STATE DVDMS LINKS
                             </a>
-                            <ul className="dropdown-menu mega-menu">
-                                <div className='container'>
-                                    <div className='row'>
-                                        {stateData?.map((state, index) => (
-                                            <div className="col-lg-2 col-md-4 col-sm-4 col-12 menu-hov" key={index}>
-                                                <a target="_blank" href={state?.link}>
-                                                    <img src={state?.imgUrl} className="img-fluid" alt={`${state?.stateName} image`} />
-                                                </a>
-                                                <a className="" target="_blank" href={state?.link}>
-                                                    <span><center>  {state?.stateName}</center></span>
-                                                </a>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </ul>
                         </li>
 
                         <li className="nav-item dropdown">
                             <a className="nav-link text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                                <i className="fa fa-user-circle"></i>
+                                <i className="fa fa-user-circle" style={{ fontSize: "large" }} ></i>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end">
                                 <li className='dropdown-item text-center' style={{ textDecoration: "underline" }}> <b> Welcome User</b></li>
@@ -95,6 +103,44 @@ const DashHeader = () => {
 
                     </ul>
                 </div>
+                <ul className={`dropdown-menu mega-menu ${activeDropdown === 'stateLinksDropdown' ? 'show' : ''}`} id='stateLinksDropdown'>
+                    <div className='container'>
+                        <div className='row'>
+                            {stateData?.map((state, index) => (
+                                <div className="col-lg-2 col-md-4 col-sm-4 col-12 menu-hov" key={index}>
+                                    <a target="_blank" href={state?.link}>
+                                        <img src={state?.imgUrl} className="img-fluid" alt={`${state?.stateName} image`} />
+                                    </a>
+                                    <a className="" target="_blank" href={state?.link}>
+                                        <span><center>  {state?.stateName}</center></span>
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </ul>
+                <ul className={`dropdown-menu mega-menu ${activeDropdown === 'dropmenulinks' ? 'show' : ''}`} id='dropmenulinks'>
+                    <div className='container'>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <h5 className="h3menu">
+                                    <b>Services</b>
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="fa-hover col-lg-3 col-md-4 col-sm-4 col-xs-4">
+                                <a className="acrmenu" data-val="L0NEV0gvbW1zL3RyYW5zYWN0aW9ucy9TdGF0ZUpvYkR0bFRyYW5zQ05ULmNudA==" data-menuname="State Job Details">
+                                    <div className="menusize">&nbsp;
+                                        <i className="fa fa-desktop ">&nbsp;&nbsp;</i>
+                                        <span>State Job Details</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
             </nav>
             {showFeedback &&
                 <FeedbackForm onClose={onClose} />
