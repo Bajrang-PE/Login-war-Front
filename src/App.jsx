@@ -9,6 +9,7 @@ import DvdmsDashboard from './pages/DvdmsDashboard';
 import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
 import ChangeUserDetails from './pages/ChangeUserDetails';
 import { ToastContainer } from 'react-toastify';
+import StateConfigCwh from './component/menus/admin/StateConfigCwh';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dvdms-central-dashboard" element={<DvdmsDashboard />} />
           <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
           <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
+          <Route path="/state-config-cwh" element={<StateConfigCwh />} />
         </Routes>
         <ToastContainer />
       </Router>
