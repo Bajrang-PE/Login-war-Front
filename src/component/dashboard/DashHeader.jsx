@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FeedbackForm from './FeedbackForm';
 import { stateData } from '../../localData/HomeData';
+import MenuList from './MenuList';
 
 const DashHeader = () => {
     const [showFeedback, setShowFeedback] = useState(false);
@@ -119,28 +120,7 @@ const DashHeader = () => {
                         </div>
                     </div>
                 </ul>
-                <ul className={`dropdown-menu mega-menu ${activeDropdown === 'dropmenulinks' ? 'show' : ''}`} id='dropmenulinks'>
-                    <div className='container'>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <h5 className="h3menu">
-                                    <b>Services</b>
-                                </h5>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="fa-hover col-lg-3 col-md-4 col-sm-4 col-xs-4">
-                                <a className="acrmenu" data-val="L0NEV0gvbW1zL3RyYW5zYWN0aW9ucy9TdGF0ZUpvYkR0bFRyYW5zQ05ULmNudA==" data-menuname="State Job Details">
-                                    <div className="menusize">&nbsp;
-                                        <i className="fa fa-desktop ">&nbsp;&nbsp;</i>
-                                        <span>State Job Details</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </ul>
+                <MenuList activeDropdown={activeDropdown} />
             </nav>
             {showFeedback &&
                 <FeedbackForm onClose={onClose} />
