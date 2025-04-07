@@ -8,6 +8,7 @@ const LoginContextApi = ({ children }) => {
     //Globals
     const [showCmsLogin, setShowCmsLogin] = useState(false);
     const [showForgotPass, setShowForgotPass] = useState(false);
+    const [selectedOption, setSelectedOption] = useState([]);
     //API Data
     const [widgetData, setWidgetData] = useState([])
 
@@ -39,7 +40,8 @@ const LoginContextApi = ({ children }) => {
             widgetData, getWidgetData,
             showCmsLogin, setShowCmsLogin,
             showForgotPass, setShowForgotPass,
-            getHintQuestionDrpData,hintQuestionDrpDt
+            getHintQuestionDrpData,hintQuestionDrpDt,
+            selectedOption, setSelectedOption
         }}>
             {children}
         </LoginContext.Provider>

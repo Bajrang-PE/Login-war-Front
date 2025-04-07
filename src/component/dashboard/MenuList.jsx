@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accordion } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './Menu.css';
 
 const MenuList = (props) => {
@@ -21,10 +22,10 @@ const MenuList = (props) => {
                     title: 'Admin Master',
                     items: [
                         { dataVal: 'addUser', menuName: 'Dashboard Setup', icon: 'fa-gear' },
-                        { dataVal: 'editUser', menuName: 'Zone Master', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'Zone Master', icon: 'fa-gear', link: "/menus/zone-master" },
                         { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'District Master', icon: 'fa-gear' },
-                        { dataVal: 'editUser', menuName: 'State Config Cwh', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'State Config Cwh', icon: 'fa-gear', link: "/menus/state-config-cwh" },
                         { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Group Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Sub Group Master', icon: 'fa-gear' },
@@ -82,12 +83,12 @@ const MenuList = (props) => {
                                                     <div className="row">
                                                         {subMenuType.items?.map((item, idx) => (
                                                             <div key={idx} className="col-lg-3 col-md-4 col-sm-4 col-xs-4 menu-item">
-                                                                <a className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName}>
+                                                                <Link className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName} title={item.menuName} to={item?.link ? item?.link : '#'}>
                                                                     <div className="menu-content">
                                                                         <i className={`fa ${item.icon}`}></i>
                                                                         <span>{item.menuName}</span>
                                                                     </div>
-                                                                </a>
+                                                                </Link>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -99,12 +100,12 @@ const MenuList = (props) => {
                                     <div className="row">
                                         {menuType.items?.map((item, idx) => (
                                             <div key={idx} className="col-lg-3 col-md-4 col-sm-4 col-xs-4 menu-item">
-                                                <a className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName}>
+                                                <Link className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName} title={item.menuName} to={item?.link ? item?.link : '#'}>
                                                     <div className="menu-content">
                                                         <i className={`fa ${item.icon}`}></i>
                                                         <span>{item.menuName}</span>
                                                     </div>
-                                                </a>
+                                                </Link>
                                             </div>
                                         ))}
                                     </div>

@@ -12,18 +12,6 @@ const DashHeader = () => {
         setShowFeedback(false)
     }
 
-    // const handleDropdown = (id) => {
-    //     const ele = document.getElementById(id);
-    //     console.log(ele?.classList, 'ele')
-    //     if (ele) {
-    //         if (ele?.classList.contains('show')) {
-    //             ele?.classList.remove('show')
-    //         } else {
-    //             ele?.classList.add('show')
-    //         }
-    //     }
-    // }
-
     const handleDropdown = (id) => {
         setActiveDropdown((prev) => (prev === id ? null : id));
     };
@@ -31,6 +19,9 @@ const DashHeader = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest('.dropdown') && !event.target.closest('.mega-menu')) {
+                setActiveDropdown(null);
+            }
+            if(event.target.closest('.acrmenu')){
                 setActiveDropdown(null);
             }
         };
@@ -68,7 +59,7 @@ const DashHeader = () => {
                             </a>
                         </li>
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" onClick={() => setActiveDropdown(null)}>
                             <a className="nav-link text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
                                 <i className="fa fa-user-circle" style={{ fontSize: "large" }} ></i>
                             </a>
