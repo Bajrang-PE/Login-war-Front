@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const BaseUrl = 'http://10.226.25.164:8025'; //pritee
+// const BaseUrl = 'http://10.226.25.164:8025'; //pritee
 // const BaseUrl = 'http://10.226.17.6:8024';  //BG
 // const BaseUrl = 'http://10.226.29.211:8025/';  //Disha
+const BaseUrl = 'http://10.226.29.102:8025/';  //shubham
 
 axios.defaults.baseURL = BaseUrl;
 
