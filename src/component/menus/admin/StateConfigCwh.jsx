@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import DashHeader from '../../dashboard/DashHeader'
 import InputSelect from "../../InputSelect";
-import { fetchData } from "../../../utils/ApiHooks";
+import { fetchData, fetchUpdateData } from "../../../utils/ApiHooks";
 import axios from 'axios';
 import { LoginContext } from '../../../context/LoginContext';
 
@@ -20,6 +20,7 @@ const StateConfigCwh = () => {
         "strStateId": "", "insertMethodOnCentralServer": "", "stateServiceUrl": "", "centServiceUrl": "",
         "stateServiceUserName": "", "stateServicePass": "", "serviceConnTimeout": "", "dataFetchSize": "",
         "dbDrivClass": "", "dbUrl": "", "dbUserName": "", "dbPass": "", "isDbCredAvl": "", "stateDatabase": "", "jobForTesting": "",
+        "jobId":"","jobName":"",
     });
 
 
@@ -36,6 +37,13 @@ const StateConfigCwh = () => {
         }
     }, [values?.strStateId]);
 
+    
+    useEffect(() => {
+        if (values?.insertMethodOnCentralServer == "3" && values?.strStateId) {
+            getJobDrpData(values?.strStateId);
+            console.log('first')
+        }
+    }, [values?.strStateId,values?.insertMethodOnCentralServer]);
 
     const handleValueChange = (e) => {
         const { name, value } = e.target;
@@ -48,10 +56,12 @@ const StateConfigCwh = () => {
 
     const fetchDataByState = async (stateId) => {
         try {
-            console.log("bbbbbbb", stateId);
+           
             fetchData(`/state/getStateConfig/${stateId}`).then((data) => {
+
+              
                 if (data) {
-                    console.log("=========res===", data)
+                    
                     setValues({
                         ...values,
                         strStateId: data?.cwhnumStateId,
@@ -71,9 +81,8 @@ const StateConfigCwh = () => {
 
                     })
 
-                } else {
-                    setStateNameDrpDt([])
-                }
+                } 
+
             })
 
         } catch (error) {
@@ -81,16 +90,58 @@ const StateConfigCwh = () => {
         }
     };
 
+    const getJobDrpData = async(stateId) => {
+        fetchData(`/state/getjob/${stateId}`).then((data) => {
+            
+            if (data) {
+               
+                const drpData = data?.map((dt) => {
+                    const val = {
+                        value: dt?.cwhnumJobId,
+                        label: dt?.cwhstrJobName
+                    }
+                    return val;
+                })
+    
+                setJobForTestingDrpDt(drpData)
 
-
-
-    const saveDetail = (e) => {
-        alert("clicked on save")
+            } else {
+                setJobForTestingDrpDt([])
+            }
+        })
     }
 
-    const reset = () => {
+    const saveDetail = async (e) => {
+        e.preventDefault(); // prevent form from refreshing the page
+    
+        alert("clicked on save");
+    
+        const data = {
+        
+            "cwhnumStateId": values?.stateId,
+            "cwhstrStateUrl": values?.stateServiceUrl,
+            "cwhnumThreadpoolSize": values?.dataFetchSize,
+            "cwhstrDatabaseName": values?.dbName,
+            "numIsDataInsertByEtlWar": values?.insertMethodOnCentralServer,
+            "cwhnumServiceconnecttimeout": values?.serviceConnTimeout,
+            "cwhnumBatchsize": values?.dataFetchSize,
+            "cwhstrCentralserverurl": values?.centServiceUrl,
+            "cwhstrStateserviceusername": values?.stateServiceUserName,
+            "cwhstrStateservicepassword": values?.stateServicePass,
+            "cwhnumIsdbcedentialavailable": values?.isDbCredAvl,
+            "cwhstrDatabasedriverclassname": values?.dbDrivClass,
+            "cwhstrDatabaseurl": values?.dbUrl,
+            "cwhstrDatabaseusername":values?.dbUserName,
+            "cwhstrDatabasepassword": values?.dbPass
+        }
+    
+            const response = await fetchUpdateData("/state/updateStateConfig", data);  
+            console.log("===aftersave=="+response)
+        
+    }
+    
 
-        alert("clicked on reset")
+    const reset = () => {
 
         setValues({
             "strStateId": "", "insertMethodOnCentralServer": "", "stateServiceUrl": "", "centServiceUrl": "",
@@ -103,6 +154,7 @@ const StateConfigCwh = () => {
         <div>
             <DashHeader />
             <div className='text-left w-100 fw-bold p-1 heading-text' >State Configuration Master</div>
+
             <div className="row mt-3">
                 <div className="form-group col-sm-6 row" style={{ paddingBottom: "1px" }}>
                     <label className="col-sm-4 col-form-label fix-label required-label">State Name : </label>
@@ -123,7 +175,12 @@ const StateConfigCwh = () => {
                         }
                     </div>
                 </div>
+            </div>
 
+            {values?.strStateId !=="" &&
+            <div>
+
+            <div className="row mt-1">
                 <div className="form-group col-sm-6 row" style={{ paddingBottom: "1px" }}>
                     <label className="col-sm-4 col-form-label fix-label required-label">Insert Method On Central Server : </label>
                     <div className="col-sm-8 align-content-center">
@@ -242,7 +299,7 @@ const StateConfigCwh = () => {
                     </div>
                 </div>
             </div>
-            {values?.insertMethodOnCentralServer !== "3" &&  // for 3rd Condition
+            {values?.insertMethodOnCentralServer != "3" &&  // for 3rd Condition
                 <div>
                     <div className="row mt-1">
                         <div className="form-group col-sm-6 row" style={{ paddingBottom: "1px" }}>
@@ -359,15 +416,15 @@ const StateConfigCwh = () => {
                 </div>
             }
 
-            {values.insertMethodOnCentralServer === "3" &&
+            {values.insertMethodOnCentralServer == "3" &&
                 <div className="row mb-3 mt-1">
                     <div className="form-group col-sm-6 row" style={{ paddingBottom: "1px" }}>
                         <label className="col-sm-4 col-form-label fix-label required-label"> Select Job For Testing : </label>
                         <div className="col-sm-8 align-content-center">
-                            <input
-                                type="text"
+                            <InputSelect 
                                 className="aliceblue-bg form-control form-control-sm border-dark-subtle"
                                 name='jobForTesting'
+                                placeholder="Select Value"
                                 id='jobForTesting'
                                 options={jobForTestingDrpDt}
                                 onChange={handleValueChange}
@@ -389,9 +446,14 @@ const StateConfigCwh = () => {
 
                     <button className='btn btn-sm new-btn-blue py-0' onClick={reset}>
                         <i className="fa fa-broom me-1"></i>Clear</button>
+
+                        <button className='btn btn-sm new-btn-blue py-0' onClick={reset}>
+                        <i className="fa fa-broom me-1"></i>Test Url</button>
                 </>
 
             </div>
+
+            </div>}
 
         </div>
     )

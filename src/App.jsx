@@ -10,6 +10,7 @@ import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
 import ChangeUserDetails from './pages/ChangeUserDetails';
 import { ToastContainer } from 'react-toastify';
 import StateConfigCwh from './component/menus/admin/StateConfigCwh';
+import DrugTypeMaster from './component/menus/admin/DrugTypeMaster';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
           <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
           <Route path="/state-config-cwh" element={<StateConfigCwh />} />
+          <Route path="/drug-type-mst" element={<DrugTypeMaster />} />
         </Routes>
         <ToastContainer />
       </Router>
