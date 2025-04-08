@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FeedbackForm from './FeedbackForm';
 import { stateData } from '../../localData/HomeData';
+import MenuList from './MenuList';
 
 const DashHeader = () => {
     const [showFeedback, setShowFeedback] = useState(false);
@@ -11,18 +12,6 @@ const DashHeader = () => {
         setShowFeedback(false)
     }
 
-    // const handleDropdown = (id) => {
-    //     const ele = document.getElementById(id);
-    //     console.log(ele?.classList, 'ele')
-    //     if (ele) {
-    //         if (ele?.classList.contains('show')) {
-    //             ele?.classList.remove('show')
-    //         } else {
-    //             ele?.classList.add('show')
-    //         }
-    //     }
-    // }
-
     const handleDropdown = (id) => {
         setActiveDropdown((prev) => (prev === id ? null : id));
     };
@@ -30,6 +19,9 @@ const DashHeader = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (!event.target.closest('.dropdown') && !event.target.closest('.mega-menu')) {
+                setActiveDropdown(null);
+            }
+            if(event.target.closest('.acrmenu')){
                 setActiveDropdown(null);
             }
         };
@@ -67,7 +59,7 @@ const DashHeader = () => {
                             </a>
                         </li>
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" onClick={() => setActiveDropdown(null)}>
                             <a className="nav-link text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
                                 <i className="fa fa-user-circle" style={{ fontSize: "large" }} ></i>
                             </a>
@@ -119,28 +111,7 @@ const DashHeader = () => {
                         </div>
                     </div>
                 </ul>
-                <ul className={`dropdown-menu mega-menu ${activeDropdown === 'dropmenulinks' ? 'show' : ''}`} id='dropmenulinks'>
-                    <div className='container'>
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <h5 className="h3menu">
-                                    <b>Services</b>
-                                </h5>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="fa-hover col-lg-3 col-md-4 col-sm-4 col-xs-4">
-                                <a className="acrmenu" data-val="L0NEV0gvbW1zL3RyYW5zYWN0aW9ucy9TdGF0ZUpvYkR0bFRyYW5zQ05ULmNudA==" data-menuname="State Job Details">
-                                    <div className="menusize">&nbsp;
-                                        <i className="fa fa-desktop ">&nbsp;&nbsp;</i>
-                                        <span>State Job Details</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </ul>
+                <MenuList activeDropdown={activeDropdown} />
             </nav>
             {showFeedback &&
                 <FeedbackForm onClose={onClose} />

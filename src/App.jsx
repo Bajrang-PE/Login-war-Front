@@ -10,7 +10,8 @@ import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
 import ChangeUserDetails from './pages/ChangeUserDetails';
 import { ToastContainer } from 'react-toastify';
 import StateConfigCwh from './component/menus/admin/StateConfigCwh';
-import DrugTypeMaster from './component/menus/admin/DrugTypeMaster';
+import ZoneMaster from './component/menus/admin/ZoneMaster';
+import Menus from './pages/Menus';
 
 function App() {
 
@@ -22,8 +23,9 @@ function App() {
           <Route path="/dvdms-central-dashboard" element={<DvdmsDashboard />} />
           <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
           <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
-          <Route path="/state-config-cwh" element={<StateConfigCwh />} />
-          <Route path="/drug-type-mst" element={<DrugTypeMaster />} />
+        
+          {/* <Route path="/zone-master" element={<ZoneMaster />} /> */}
+          <Route path="/menus/*" element={<Menus />} />
         </Routes>
         <ToastContainer />
       </Router>
