@@ -23,7 +23,7 @@ const MenuList = (props) => {
                     items: [
                         { dataVal: 'addUser', menuName: 'Dashboard Setup', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Zone Master', icon: 'fa-gear', link: "/menus/zone-master" },
-                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear',link:"/menus/state-master" },
                         { dataVal: 'editUser', menuName: 'District Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'State Config Cwh', icon: 'fa-gear', link: "/menus/state-config-cwh" },
                         { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear' },
