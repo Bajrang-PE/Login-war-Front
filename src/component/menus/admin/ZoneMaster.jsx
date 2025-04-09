@@ -6,7 +6,7 @@ import { functionalityData } from '../../../localData/HomeData';
 
 const ZoneMaster = () => {
 
-    const { selectedOption, setSelectedOption } = useContext(LoginContext);
+    const { selectedOption, setSelectedOption, openPage, setOpenPage } = useContext(LoginContext);
     const [searchInput, setSearchInput] = useState('');
 
     const column = [

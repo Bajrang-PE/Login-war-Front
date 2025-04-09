@@ -3,12 +3,13 @@ import { LoginContext } from '../../../context/LoginContext';
 import InputSelect from '../../InputSelect';
 import GlobalTable from '../../GlobalTable';
 import { functionalityData } from '../../../localData/HomeData';
+import { capitalizeFirstLetter } from '../../../utils/CommonFunction';
+import StateMasterForm from '../forms/admin/StateMasterForm';
 
 const StateMaster = () => {
 
-    const { selectedOption, setSelectedOption } = useContext(LoginContext);
+    const { selectedOption, setSelectedOption, openPage, setOpenPage } = useContext(LoginContext);
     const [searchInput, setSearchInput] = useState('');
-    const [openPage, setOpenPage] = useState('home')
 
     const column = [
         {
@@ -42,60 +43,60 @@ const StateMaster = () => {
             sortable: true,
         },
     ]
+
     return (
         <>
             <div className='masters mx-3 my-2'>
                 <div className='masters-header row'>
-                    <span className='col-6'><b>{'State Master >>'}</b></span>
-                    <span className='col-6 text-end'>Total Records : 12</span>
+                    <span className='col-6'><b>{`State Master >>${capitalizeFirstLetter(openPage)}`}</b></span>
+                    {openPage === "home" && <span className='col-6 text-end'>Total Records : {functionalityData?.length || 0}</span>}
+                </div>
 
-                </div>
-                <div className='row pt-2'>
-                    <div className='col-sm-6'>
-                        <div className="form-group row" style={{ paddingBottom: "1px" }}>
-                            <label className="col-sm-5 col-form-label fix-label required-label">Country : </label>
-                            <div className="col-sm-7 align-content-center">
-                                <InputSelect
-                                    id="hintquestion"
-                                    name="hintquestion"
-                                    placeholder="Select Country"
-                                    options={[{ value: 1, label: 'India' }]}
-                                    className="aliceblue-bg border-dark-subtle"
-                                // value={values?.hintquestion}
-                                // onChange={handleValueChange}
-                                />
-                                {/* {errors.hintquestionErr &&
-                        <div className="required-input">
-                            {errors?.hintquestionErr}
+                {openPage === "home" && (<>
+                    <div className='row pt-2'>
+                        <div className='col-sm-6'>
+                            <div className="form-group row" style={{ paddingBottom: "1px" }}>
+                                <label className="col-sm-5 col-form-label fix-label required-label">Country : </label>
+                                <div className="col-sm-7 align-content-center">
+                                    <InputSelect
+                                        id="hintquestion"
+                                        name="hintquestion"
+                                        placeholder="Select Country"
+                                        options={[{ value: 1, label: 'India' }]}
+                                        className="aliceblue-bg border-dark-subtle"
+                                    // value={values?.hintquestion}
+                                    // onChange={handleValueChange}
+                                    />
+
+                                </div>
+                            </div>
                         </div>
-                    } */}
+                        <div className='col-sm-6'>
+                            <div className="form-group row" style={{ paddingBottom: "1px" }}>
+                                <label className="col-sm-5 col-form-label fix-label">Record Status : </label>
+                                <div className="col-sm-7 align-content-center">
+                                    <InputSelect
+                                        id="hintquestion"
+                                        name="hintquestion"
+                                        placeholder="Select Status"
+                                        options={[{ value: 1, label: 'Active' }, { value: 2, label: 'InActive' }]}
+                                        className="aliceblue-bg border-dark-subtle"
+                                    // value={values?.hintquestion}
+                                    // onChange={handleValueChange}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className='col-sm-6'>
-                        <div className="form-group row" style={{ paddingBottom: "1px" }}>
-                            <label className="col-sm-5 col-form-label fix-label">Record Status : </label>
-                            <div className="col-sm-7 align-content-center">
-                                <InputSelect
-                                    id="hintquestion"
-                                    name="hintquestion"
-                                    placeholder="Select Status"
-                                    options={[{ value: 1, label: 'Active' }, { value: 2, label: 'InActive' }]}
-                                    className="aliceblue-bg border-dark-subtle"
-                                // value={values?.hintquestion}
-                                // onChange={handleValueChange}
-                                />
-                                {/* {errors.hintquestionErr &&
-                        <div className="required-input">
-                            {errors?.hintquestionErr}
-                        </div>
-                    } */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr className='my-2' />
-                <GlobalTable column={column} data={functionalityData} onAdd={null} onModify={null} onDelete={null} onView={null} onReport={null} setSearchInput={setSearchInput} isShowBtn={true} isAdd={true} isModify={true} isDelete={true} isView={true} isReport={true} />
+                    <hr className='my-2' />
+                    <GlobalTable column={column} data={functionalityData} onAdd={null} onModify={null} onDelete={null} onView={null} onReport={null} setSearchInput={setSearchInput} isShowBtn={true} isAdd={true} isModify={true} isDelete={true} isView={true} isReport={true} setOpenPage={setOpenPage} />
+
+                </>)}
+
+                {(openPage === "add" || openPage === 'modify') && (<>
+                    <StateMasterForm />
+                </>)}
+
             </div>
         </>
     )
