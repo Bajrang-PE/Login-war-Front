@@ -23,7 +23,7 @@ function App() {
           <Route path="/dvdms-central-dashboard" element={<DvdmsDashboard />} />
           <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
           <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
-          <Route path="/state-config-cwh" element={<StateConfigCwh />} />
+        
           {/* <Route path="/zone-master" element={<ZoneMaster />} /> */}
           <Route path="/menus/*" element={<Menus />} />
         </Routes>

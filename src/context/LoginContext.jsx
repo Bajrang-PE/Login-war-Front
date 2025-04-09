@@ -13,7 +13,9 @@ const LoginContextApi = ({ children }) => {
     const [widgetData, setWidgetData] = useState([])
 
     //dropdowns
-    const [hintQuestionDrpDt,setHintQuestionDrpDt] = useState([]);
+    const [hintQuestionDrpDt, setHintQuestionDrpDt] = useState([]);
+    const [stateNameDrpDt, setStateNameDrpDt] = useState([]);
+
 
     const getWidgetData = () => {
         fetchData('http://10.226.25.164:8024/hisutils/allWidgetConfiguration?dashboardFor=CENTRAL+DASHBOARD').then((data) => {
@@ -35,12 +37,34 @@ const LoginContextApi = ({ children }) => {
         })
     }
 
+    const getSteteNameDrpData = () => {
+        fetchData('/state/getstate').then((data) => {
+            if (data) {
+
+                const drpData = data?.map((dt) => {
+                    const val = {
+                        value: dt?.cwhnumStateId,
+                        label: dt?.cwhstrStateName
+                    }
+
+                    return val;
+                })
+
+                setStateNameDrpDt(drpData)
+
+            } else {
+                setStateNameDrpDt([])
+            }
+        })
+    }
+
     return (
         <LoginContext.Provider value={{
             widgetData, getWidgetData,
             showCmsLogin, setShowCmsLogin,
             showForgotPass, setShowForgotPass,
-            getHintQuestionDrpData,hintQuestionDrpDt,
+            getHintQuestionDrpData, hintQuestionDrpDt,
+            getSteteNameDrpData, stateNameDrpDt,
             selectedOption, setSelectedOption
         }}>
             {children}
