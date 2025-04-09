@@ -42,13 +42,13 @@ const StateMaster = () => {
             sortable: true,
         },
     ]
-
     return (
         <>
             <div className='masters mx-3 my-2'>
                 <div className='masters-header row'>
                     <span className='col-6'><b>{'State Master >>'}</b></span>
                     <span className='col-6 text-end'>Total Records : 12</span>
+
                 </div>
                 <div className='row pt-2'>
                     <div className='col-sm-6'>
