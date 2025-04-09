@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import DashHeader from '../../dashboard/DashHeader'
 import InputSelect from "../../InputSelect";
 import { fetchData } from "../../../utils/ApiHooks";
+import GlobalTable from '../../GlobalTable';
+import DrugTypeForm from '../../../pages/DrugTypeForm';
 
 export const DrugTypeMaster = () => {
 
     const [stateNameDrpDt, setStateNameDrpDt] = useState([]);
     const [drugs, setDrugs] = useState([]);
+        const [searchInput, setSearchInput] = useState('');
+    
 
     const [errors, setErrors] = useState({
     })
@@ -16,7 +20,7 @@ export const DrugTypeMaster = () => {
         "strStateId": "", "insertMethodOnCentralServer": "", "stateServiceUrl": "", "centServiceUrl": "",
         "stateServiceUserName": "", "stateServicePass": "", "serviceConnTimeout": "", "dataFetchSize": "",
         "dbDrivClass": "", "dbUrl": "", "dbUserName": "", "dbPass": "", "isDbCredAvl": "", "stateDatabase": "", "jobForTesting": "",
-        "recordStatus": "",
+        "recordStatus": "1",
     });
 
 
@@ -49,7 +53,6 @@ export const DrugTypeMaster = () => {
         }
     }
 
-
     const columns = [
         {
             name: <input
@@ -65,7 +68,7 @@ export const DrugTypeMaster = () => {
                         <input
                             type="checkbox"
                         // checked={selectedRows.includes(row.gnumUserId)}
-                        // onChange={(e) => { handleRowSelect(row.gnumUserId) }}
+                        // onChange={(e) => { handleRowSelect(row.cwhnumDrugTypeId) }}
                         />
                     </span>
                 </div>,
@@ -82,7 +85,6 @@ export const DrugTypeMaster = () => {
 
     return (
         <div>
-            <DashHeader />
             <div className='text-left w-100 fw-bold p-1 heading-text' >Drug Type Master</div>
             <div className="row mt-3">
                 <div className="form-group col-sm-6 row" style={{ paddingBottom: "1px" }}>

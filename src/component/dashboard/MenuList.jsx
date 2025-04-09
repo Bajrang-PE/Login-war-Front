@@ -29,7 +29,7 @@ const MenuList = (props) => {
                         { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Group Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Sub Group Master', icon: 'fa-gear' },
-                        { dataVal: 'editUser', menuName: 'Drug Type Master', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'Drug Type Master', icon: 'fa-gear',link:"/menus/drug-type-master" },
                     ],
                 },
                 {
