@@ -23,13 +23,17 @@ const MenuList = (props) => {
                     items: [
                         { dataVal: 'addUser', menuName: 'Dashboard Setup', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Zone Master', icon: 'fa-gear', link: "/menus/zone-master" },
-                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear',link:"/menus/state-master" },
+                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear', link: "/menus/state-master" },
                         { dataVal: 'editUser', menuName: 'District Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'State Config Cwh', icon: 'fa-gear', link: "/menus/state-config-cwh" },
-                        { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear', link: "/menus/facility-type-master" },
                         { dataVal: 'editUser', menuName: 'Group Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Sub Group Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Drug Type Master', icon: 'fa-gear' },
+
+                        { dataVal: 'editUser', menuName: 'Generic Drug Master', icon: 'fa-gear', link: "/menus/generic-drug-master" },
+                        { dataVal: 'editUser', menuName: 'Facility Type Mapping Master', icon: 'fa-gear', link: "/menus/facility-type-mapping-master" },
+                        { dataVal: 'editUser', menuName: 'Job Order', icon: 'fa-gear' },
                     ],
                 },
                 {

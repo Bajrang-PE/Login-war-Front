@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import GlobalButtons from '../../GlobalButtons'
 import InputField from '../../../InputField'
 import { LoginContext } from '../../../../context/LoginContext';
-import { fetchData } from '../../../../utils/ApiHooks';
+import { fetchData, fetchPostData, fetchUpdateData } from '../../../../utils/ApiHooks';
 import { ToastAlert } from '../../../../utils/CommonFunction';
 
 const ZoneMasterForm = () => {
-    const { openPage, selectedOption, setOpenPage, setSelectedOption } = useContext(LoginContext);
+    const { openPage, selectedOption, setOpenPage, setSelectedOption, getZoneListData } = useContext(LoginContext);
     const [zoneName, setZoneName] = useState('');
     const [recordStatus, setRecordStatus] = useState('1');
     const [singleData, setSingleData] = useState([]);
@@ -27,14 +27,45 @@ const ZoneMasterForm = () => {
         }
     }, [selectedOption, openPage])
 
-    console.log(selectedOption,'opopo')
 
     const saveZoneData = () => {
-
+        const val = {
+            "gnumSeatid": 10001,
+            "cwhstrZoneName": zoneName,
+            "status": "1"
+        }
+        fetchPostData(`api/v1/zones`, val).then(data => {
+            if (data) {
+                ToastAlert('Record added successfully', 'success');
+                getZoneListData();
+                setOpenPage('home');
+                reset();
+            } else {
+                ToastAlert('error while creating record!', "error");
+            }
+        })
     }
 
     const updateZoneData = () => {
-
+        const val = {
+            "gnumSeatid": 10001,
+            "cwhstrZoneName": zoneName,
+            "status": recordStatus,
+            "cwhnumZoneId": selectedOption[0]?.cwhnumZoneId,
+            "cwhstrZoneShortName": "",
+            "cwhnumFlagForNhm": 0,
+        }
+        fetchUpdateData(`api/v1/zones/${selectedOption[0]?.cwhnumZoneId}`, val).then(data => {
+            if (data) {
+                ToastAlert('Record Updated Successfully', 'success');
+                getZoneListData();
+                setOpenPage('home');
+                reset();
+                setSelectedOption([]);
+            } else {
+                ToastAlert('error while updating record!', error)
+            }
+        })
     }
 
     useEffect(() => {
@@ -44,9 +75,14 @@ const ZoneMasterForm = () => {
         }
     }, [singleData])
 
+    const reset = () => {
+        setZoneName('');
+        setRecordStatus('1')
+    }
+    console.log(selectedOption, 'sele')
     return (
         <div>
-            <GlobalButtons onSave={null} onClear={null} />
+            <GlobalButtons onSave={openPage === "add" ? saveZoneData : updateZoneData} onClear={reset} />
             <hr className='my-2' />
             <div className='row pt-2'>
                 <div className='col-sm-6'>
@@ -76,8 +112,8 @@ const ZoneMasterForm = () => {
                                     <input
                                         className="border-dark-subtle form-check-input"
                                         type="radio"
-                                        name="isWidgetNameVisible"
-                                        id="isWidgetNameVisibleYes"
+                                        name="recordStatus"
+                                        id="recordStatus1"
                                         value={'1'}
                                         onChange={(e) => setRecordStatus(e.target.value)}
                                         checked={recordStatus === "1"}
@@ -90,8 +126,8 @@ const ZoneMasterForm = () => {
                                     <input
                                         className="border-dark-subtle form-check-input"
                                         type="radio"
-                                        name="isWidgetNameVisible"
-                                        id="isWidgetNameVisibleNo"
+                                        name="recordStatus"
+                                        id="recordStatus0"
                                         value={'0'}
                                         onChange={() => setRecordStatus(e.target.value)}
                                         checked={recordStatus === '0'}
