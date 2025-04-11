@@ -1,30 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
-import GlobalTable from '../../GlobalTable'
-import { LoginContext } from '../../../context/LoginContext'
+import { LoginContext } from '../../../context/LoginContext';
+import { capitalizeFirstLetter } from '../../../utils/CommonFunction';
 import InputSelect from '../../InputSelect';
-import ZoneMasterForm from '../forms/admin/ZoneMasterForm';
-import ViewPage from '../ViewPage';
-import { fetchDeleteData } from '../../../utils/ApiHooks';
-import { capitalizeFirstLetter, ToastAlert } from '../../../utils/CommonFunction';
+import GlobalTable from '../../GlobalTable';
+import GenericDrugMasterForm from '../forms/admin/GenericDrugMasterForm';
 
-const ZoneMaster = () => {
-
+const GenericDrugMaster = () => {
     const { selectedOption, setSelectedOption, openPage, setOpenPage, getZoneListData, zoneListData } = useContext(LoginContext);
     const [searchInput, setSearchInput] = useState('');
     const [recordStatus, setRecordStatus] = useState('1')
 
     useEffect(() => {
-        getZoneListData(recordStatus)
+
     }, [recordStatus])
 
     const handleRowSelect = (row) => {
-        // setSelectedOption((prev) => {
-        //     if (prev.includes(row?.cwhnumZoneId)) {
-        //         return prev.filter(dt => dt?.cwhnumZoneId !== row?.cwhnumZoneId);
-        //     }
-        //     return [row];
-        // });
-
         setSelectedOption((prev) => {
             if (prev.length > 0 && prev[0]?.cwhnumZoneId === row?.cwhnumZoneId) {
                 return [];
@@ -32,22 +22,6 @@ const ZoneMaster = () => {
             return [row];
         });
     };
-
-    const deleteRecord = () => {
-        if (selectedOption?.length > 0) {
-            fetchDeleteData(`api/v1/zones/${selectedOption[0]?.cwhnumZoneId}`).then(data => {
-                if (data) {
-                    ToastAlert("Record Deleted Successfully", "success")
-                    getZoneListData(recordStatus);
-                    setSelectedOption([]);
-                } else {
-                    ToastAlert('Error while deleting record!', 'error')
-                }
-            })
-        } else {
-            ToastAlert("Please select a record", "warning");
-        }
-    }
 
     const column = [
         {
@@ -71,32 +45,62 @@ const ZoneMaster = () => {
             width: "8%"
         },
         {
-            name: 'Zone Name',
+            name: 'Drug Name',
             selector: row => row.cwhstrZoneName,
             sortable: true,
         },
         {
-            name: 'Short Name',
+            name: 'Drug Type',
             selector: row => row.cwhstrZoneShortName || "---",
             sortable: true,
         },
+        {
+            name: 'Category Name',
+            selector: row => row.cwhstrZoneShortName || "---",
+            sortable: true,
+        }
     ]
-
-    const onClose = () => {
-        setOpenPage('home');
-        setSelectedOption([]);
-    }
 
     return (
         <>
             <div className='masters mx-3 my-2'>
                 <div className='masters-header row'>
-                    <span className='col-6'><b>{`Zone Master >>${capitalizeFirstLetter(openPage)}`}</b></span>
+                    <span className='col-6'><b>{`Generic Drug Master >>${capitalizeFirstLetter(openPage)}`}</b></span>
                     {openPage === "home" && <span className='col-6 text-end'>Total Records : {zoneListData?.length}</span>}
 
                 </div>
-                {(openPage === "home" || openPage === 'view') && (<>
+                {openPage === "home" && (<>
                     <div className='row pt-2'>
+                        <div className='col-sm-6'>
+                            <div className="form-group row" style={{ paddingBottom: "1px" }}>
+                                <label className="col-sm-5 col-form-label fix-label">Group : </label>
+                                <div className="col-sm-7 align-content-center">
+                                    <InputSelect
+                                        id="group"
+                                        name="group"
+                                        placeholder="Select value"
+                                        options={[{ value: 1, label: 'Antiviral' }]}
+                                        className="aliceblue-bg border-dark-subtle"
+                                    // value={recordStatus}
+                                    // onChange={(e) => { setRecordStatus(e.target.value) }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row" style={{ paddingBottom: "1px" }}>
+                                <label className="col-sm-5 col-form-label fix-label">Sub Group : </label>
+                                <div className="col-sm-7 align-content-center">
+                                    <InputSelect
+                                        id="subgroup"
+                                        name="subgroup"
+                                        placeholder="Select value"
+                                        options={[]}
+                                        className="aliceblue-bg border-dark-subtle"
+                                    // value={recordStatus}
+                                    // onChange={(e) => { setRecordStatus(e.target.value) }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <div className='col-sm-6'>
                             <div className="form-group row" style={{ paddingBottom: "1px" }}>
                                 <label className="col-sm-5 col-form-label fix-label">Record Status : </label>
@@ -116,19 +120,15 @@ const ZoneMaster = () => {
                     </div>
 
                     <hr className='my-2' />
-                    <GlobalTable column={column} data={zoneListData} onDelete={deleteRecord} onReport={null} setSearchInput={setSearchInput} isShowBtn={true} isAdd={true} isModify={true} isDelete={true} isView={true} isReport={true} setOpenPage={setOpenPage} />
-
-                    {openPage === 'view' &&
-                        <ViewPage data={[{ value: selectedOption[0]?.cwhstrZoneName, label: "Zone Name" }]} onClose={onClose} title={"Zone Master"} />
-                    }
+                    <GlobalTable column={column} data={zoneListData} onDelete={null} onReport={null} setSearchInput={setSearchInput} isShowBtn={true} isAdd={true} isModify={true} isDelete={true} isView={true} isReport={true} setOpenPage={setOpenPage} />
                 </>)}
 
                 {(openPage === "add" || openPage === 'modify') && (<>
-                    <ZoneMasterForm />
+                    <GenericDrugMasterForm />
                 </>)}
             </div>
         </>
     )
 }
 
-export default ZoneMaster
+export default GenericDrugMaster
