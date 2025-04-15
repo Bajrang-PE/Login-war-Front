@@ -6,7 +6,7 @@ import { LoginContext } from '../context/LoginContext';
 
 const GlobalTable = (props) => {
     const { selectedOption, setSelectedOption } = useContext(LoginContext);
-    const { column, data, onDelete, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport, setOpenPage } = props;
+    const { column, data, onDelete, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport, setOpenPage, isSearch } = props;
 
     const tableCustomStyles = {
         headRow: {

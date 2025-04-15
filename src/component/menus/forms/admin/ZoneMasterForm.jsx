@@ -32,7 +32,7 @@ const ZoneMasterForm = () => {
         const val = {
             "gnumSeatid": 10001,
             "cwhstrZoneName": zoneName,
-            "status": "1"
+            "status": "Active"
         }
         fetchPostData(`api/v1/zones`, val).then(data => {
             if (data) {
@@ -71,7 +71,7 @@ const ZoneMasterForm = () => {
     useEffect(() => {
         if (singleData?.length > 0) {
             setZoneName(singleData[0]?.cwhstrZoneName)
-            setRecordStatus(singleData[0]?.status === "Active" ? '1' : '0')
+            setRecordStatus(singleData[0]?.status)
         }
     }, [singleData])
 
@@ -114,9 +114,9 @@ const ZoneMasterForm = () => {
                                         type="radio"
                                         name="recordStatus"
                                         id="recordStatus1"
-                                        value={'1'}
+                                        value={'Active'}
                                         onChange={(e) => setRecordStatus(e.target.value)}
-                                        checked={recordStatus === "1"}
+                                        checked={recordStatus === "Active"}
                                     />
                                     <label className="form-check-label" htmlFor="dbYes">
                                         Active
@@ -128,9 +128,9 @@ const ZoneMasterForm = () => {
                                         type="radio"
                                         name="recordStatus"
                                         id="recordStatus0"
-                                        value={'0'}
-                                        onChange={() => setRecordStatus(e.target.value)}
-                                        checked={recordStatus === '0'}
+                                        value={'InActive'}
+                                        onChange={(e) => setRecordStatus(e.target.value)}
+                                        checked={recordStatus === 'InActive'}
                                     />
                                     <label className="form-check-label" htmlFor="dbNo">
                                         InActive

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { fetchData, fetchPostData } from '../../utils/ApiHooks';
 import { ToastAlert } from '../../utils/CommonFunction';
+import { encryptData } from '../../utils/SecurityConfig';
+import Cookies from 'js-cookie';
 
 
 const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
@@ -12,6 +14,7 @@ const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
     const [captchaToken, setCaptchaToken] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const [errors, setErrors] = useState({
         usernameErr: "", passwordErr: "", captchaInputErr: ""
@@ -73,15 +76,29 @@ const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
             }
             fetchPostData("/api/v1/auth/login", val).then(data => {
                 if (data) {
-                    if(!data?.message){
-                        console.log(data,'data')
-                        ToastAlert("Login successful",'success')
-                    }else{
-                        ToastAlert(data?.message,'error');
+                    if (!data?.message && data?.accessToken) {
+                        console.log(data, 'data')
+                        ToastAlert("Login successful", 'success')
+                        const { gnumSeatId, gstrUserName, accessToken, refreshToken, csrfToken, gnumHospitalCode, } = data;
+                        const auth = {
+                            'isLogin': true,
+                            //   'userType': (gstrUserName)?.toLowerCase(),
+                            'username': gstrUserName,
+                            'userSeatId': gnumSeatId,
+                            //   'hospitalName': gstrHospitalName,
+                            'hospitalCode': gnumHospitalCode
+                        }
+                        sessionStorage.setItem('data', encryptData(JSON.stringify(auth)));
+                        Cookies.set('csrfToken', csrfToken);
+                        sessionStorage.setItem('accessToken', accessToken);
+                        sessionStorage.setItem('refreshToken', refreshToken);
+                        navigate('/dvdms-central-dashboard');
+                    } else {
+                        ToastAlert(data?.message, 'error');
                     }
                 } else {
                     console.log("Request Failed!")
-                    ToastAlert('login failed!','error')
+                    ToastAlert('login failed!', 'error')
                 }
             })
         }
@@ -103,7 +120,7 @@ const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
                         <select className="form-control aliceblue-bg" id="DashboardFor" name='DashboardFor' placeholder="Select Program" defaultValue={'1'}>
                             <option value="1">Central Dashboard</option>
                         </select>
-                    </div>  
+                    </div>
                     <div className="ps-0 align-content-center m-3">
                         <input
                             type="text"

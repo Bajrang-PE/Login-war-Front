@@ -6,44 +6,12 @@ import InputSelect from '../../InputSelect';
 const FacilityTypeMappingMaster = () => {
     const { selectedOption, setSelectedOption, openPage, setOpenPage } = useContext(LoginContext);
 
-    const column = [
-        {
-            name: <input
-                type="checkbox"
-                // checked={selectAll}
-                // onChange={(e) => handleSelectAll(e.target.checked, "gnumUserId")}
-                className="form-check-input log-select"
-                disabled
-            />,
-            cell: row =>
-                <div style={{ position: 'absolute', top: 4, left: 10 }}>
-                    <span className="btn btn-sm text-white px-1 py-0 mr-1" >
-                        <input
-                            type="checkbox"
-                            checked={''}
-                            onChange={(e) => { setSelectedOption([row]) }}
-                        />
-                    </span>
-                </div>,
-            width: "8%"
-        },
-        {
-            name: 'State Name',
-            selector: row => row.title,
-            sortable: true,
-        },
-        {
-            name: 'State Short Name',
-            selector: row => row.description,
-            sortable: true,
-        },
-    ]
 
     return (
         <>
             <div className='masters mx-3 my-2'>
                 <div className='masters-header row'>
-                    <span className='col-6'><b>{`Facility Type Mapping Master >>${capitalizeFirstLetter(openPage)}`}</b></span>
+                    <span className='col-12'><b>{`Facility Type Mapping Master`}</b></span>
                     {/* {openPage === "home" && <span className='col-6 text-end'>Total Records : {functionalityData?.length || 0}</span>} */}
                 </div>
 
@@ -68,7 +36,7 @@ const FacilityTypeMappingMaster = () => {
                     </div>
                     <div className='col-sm-6'>
                         <div className="form-group row" style={{ paddingBottom: "1px" }}>
-                            <label className="col-sm-5 col-form-label fix-label">State : </label>
+                            <label className="col-sm-5 col-form-label fix-label required-label">State : </label>
                             <div className="col-sm-7 align-content-center">
                                 <InputSelect
                                     id="hintquestion"

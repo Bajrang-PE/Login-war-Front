@@ -30,7 +30,7 @@ const LoginContextApi = ({ children }) => {
     }
 
     const getZoneListData = (status) => {
-        fetchData(`api/v1/zones/status?status=${status ? status : 1}`).then((data) => {
+        fetchData(`api/v1/zones/status?status=${status ? status : "1"}`).then((data) => {
             if (data) {
                 setZoneListData(data)
             } else {
@@ -79,7 +79,7 @@ const LoginContextApi = ({ children }) => {
             getSteteNameDrpData, stateNameDrpDt,
             selectedOption, setSelectedOption,
             openPage, setOpenPage,
-            getZoneListData,zoneListData
+            getZoneListData, zoneListData
         }}>
             {children}
         </LoginContext.Provider>
