@@ -33,7 +33,7 @@ const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
     }
 
     const fetchCaptchaData = () => {
-        fetchData('/api/v1/generateCaptcha').then(data => {
+        fetchData('/api/v1/captcha').then(data => {
             if (data) {
                 setCaptchaImage(data?.captchaImage);
                 setCaptchaToken(data?.captchaToken);
@@ -66,18 +66,18 @@ const CmsLogin = ({ isShow, onClose, setShowForgotPass }) => {
         if (isValid) {
 
             const val = {
-                "userName": username,
+                "username": username,
                 "password": password,
-                "captcha": captchaInput,
+                "captchaValue": captchaInput,
                 "captchaToken": captchaToken
             }
-            fetchPostData("/api/v1/login", val).then(data => {
+            fetchPostData("/api/v1/auth/login", val).then(data => {
                 if (data) {
-                    if(data?.data){
+                    if(!data?.message){
                         console.log(data,'data')
-                        ToastAlert(data?.message,'success');
+                        ToastAlert("Login successful",'success')
                     }else{
-                        ToastAlert(data,'error')
+                        ToastAlert(data?.message,'error');
                     }
                 } else {
                     console.log("Request Failed!")

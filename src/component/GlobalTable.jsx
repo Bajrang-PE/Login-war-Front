@@ -5,7 +5,7 @@ import InputField from './InputField';
 
 const GlobalTable = (props) => {
 
-    const { column, data, onAdd, onModify, onDelete, onView, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport } = props;
+    const { column, data, onAdd, onModify, onDelete, onView, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport, setOpenPage } = props;
 
     const tableCustomStyles = {
         headRow: {
@@ -28,16 +28,28 @@ const GlobalTable = (props) => {
                         {isShowBtn &&
                             <>
                                 {isAdd &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={onAdd}>
+                                    <button className='btn btn-sm datatable-btns py-0' onClick={() => {
+                                        setOpenPage('add');
+
+                                    }}>
                                         <i className="fa fa-plus me-1 fs-13 text-success"></i>Add</button>}
                                 {isModify &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={onModify}>
+                                    <button className='btn btn-sm datatable-btns py-0' onClick={() => {
+                                        setOpenPage('modify');
+                                    }}>
                                         <i className="fa fa-edit me-1 fs-13 text-warning"></i>Modify</button>}
+
                                 {isDelete &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={onDelete}>
+                                    <button className='btn btn-sm datatable-btns py-0' 
+                                     onClick={
+                                        ()=>{ setOpenPage('delete');}
+                                    }>
                                         <i className="fa fa-trash me-1 fs-13 text-danger"></i>Delete</button>}
+
                                 {isView &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={onView}>
+                                    <button className='btn btn-sm datatable-btns py-0' onClick={() => {
+                                        setOpenPage('view');
+                                    }}>
                                         <i className="fa fa-eye me-1 fs-13 text-info"></i>View</button>}
                                 {isReport &&
                                     <button className='btn btn-sm datatable-btns py-0' onClick={onReport}>

@@ -599,3 +599,8 @@ label {
   /* width: 100%; */
   margin: 0 auto !important;
 }
+
+.form-check-input:checked {
+  outline: none !important;
+  box-shadow: 0 0 4px rgba(49, 130, 206, 0.5) !important;
+}

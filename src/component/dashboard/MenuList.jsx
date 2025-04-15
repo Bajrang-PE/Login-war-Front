@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Menu.css';
+import { LoginContext } from '../../context/LoginContext';
 
 const MenuList = (props) => {
     const { activeDropdown } = props;
+    const { setSelectedOption, setOpenPage } = useContext(LoginContext);
+
 
     const menuData = [
         {
@@ -23,13 +26,15 @@ const MenuList = (props) => {
                     items: [
                         { dataVal: 'addUser', menuName: 'Dashboard Setup', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Zone Master', icon: 'fa-gear', link: "/menus/zone-master" },
-                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear' },
+                        { dataVal: 'editUser', menuName: 'State Master', icon: 'fa-gear', link: "/menus/state-master" },
                         { dataVal: 'editUser', menuName: 'District Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'State Config Cwh', icon: 'fa-gear', link: "/menus/state-config-cwh" },
                         { dataVal: 'editUser', menuName: 'Facility Type Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Group Master', icon: 'fa-gear' },
                         { dataVal: 'editUser', menuName: 'Sub Group Master', icon: 'fa-gear' },
-                        { dataVal: 'editUser', menuName: 'Drug Type Master', icon: 'fa-gear',link:"/menus/drug-type-master" },
+                        { dataVal: 'editUser', menuName: 'Drug Type Master', icon: 'fa-gear', link: "/menus/drug-type-master" },
+                        { dataVal: 'editUser', menuName: 'Supplier Master', icon: 'fa-gear', link: "/menus/supplier-master" },
+                        { dataVal: 'editUser', menuName: 'Supplier Mapping Master', icon: 'fa-gear', link: "/menus/supplier-mapping-master" },
                     ],
                 },
                 {
@@ -58,6 +63,10 @@ const MenuList = (props) => {
         },
     ];
 
+    const onTabChange = () => {
+        setOpenPage('home');
+        setSelectedOption([]);
+    }
 
     return (
         <ul className={`dropdown-menu mega-menu ${activeDropdown === 'dropmenulinks' ? 'show' : ''}`} id='dropmenulinks' style={{ border: "1px solid #003366" }}>
@@ -83,7 +92,7 @@ const MenuList = (props) => {
                                                     <div className="row">
                                                         {subMenuType.items?.map((item, idx) => (
                                                             <div key={idx} className="col-lg-3 col-md-4 col-sm-4 col-xs-4 menu-item">
-                                                                <Link className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName} title={item.menuName} to={item?.link ? item?.link : '#'}>
+                                                                <Link className="acrmenu" data-val={item.dataVal} data-menuname={item.menuName} title={item.menuName} to={item?.link ? item?.link : '#'} onClick={onTabChange}>
                                                                     <div className="menu-content">
                                                                         <i className={`fa ${item.icon}`}></i>
                                                                         <span>{item.menuName}</span>
