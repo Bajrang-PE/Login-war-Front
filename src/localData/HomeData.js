@@ -1,5 +1,5 @@
 export const imageUrls = [
-    "https://uatcdash.dcservices.in/HIS/hisglobal/CDBTemplate_V_3/Images/final-banner.jpg",
+    "https://dvdms.mohfw.gov.in/HIS/hisglobal/CDBTemplate_V_3/Images/final-banner.jpg",
     "https://uatcdash.dcservices.in/HIS/hisglobal/CDBTemplate_V_3/Images/banner2.jpg",
     "https://uatcdash.dcservices.in/HIS/hisglobal/CDBTemplate_V_3/Images/banner3.jpg"
 ];

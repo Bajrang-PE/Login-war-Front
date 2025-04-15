@@ -604,3 +604,9 @@ label {
   outline: none !important;
   box-shadow: 0 0 4px rgba(49, 130, 206, 0.5) !important;
 }
+
+@media (max-width: 768px) {
+  .role-theme {
+    padding: 8px;
+  }
+}

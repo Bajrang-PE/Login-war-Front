@@ -11,7 +11,8 @@ const LoginContextApi = ({ children }) => {
     const [selectedOption, setSelectedOption] = useState([]);
     const [openPage, setOpenPage] = useState('home')
     //API Data
-    const [widgetData, setWidgetData] = useState([])
+    const [widgetData, setWidgetData] = useState([]);
+    const [zoneListData, setZoneListData] = useState([]);
 
     //dropdowns
     const [hintQuestionDrpDt, setHintQuestionDrpDt] = useState([]);
@@ -25,6 +26,16 @@ const LoginContextApi = ({ children }) => {
                 setWidgetData(data)
             } else {
                 setWidgetData([])
+            }
+        })
+    }
+
+    const getZoneListData = (status) => {
+        fetchData(`api/v1/zones/status?status=${status ? status : "1"}`).then((data) => {
+            if (data) {
+                setZoneListData(data)
+            } else {
+                setZoneListData([])
             }
         })
     }
@@ -90,7 +101,8 @@ const LoginContextApi = ({ children }) => {
             getSteteNameDrpData, stateNameDrpDt,
             getSupplierNameDrpData, supplierNameDrpDt,
             selectedOption, setSelectedOption,
-            openPage, setOpenPage
+            openPage, setOpenPage,
+            getZoneListData, zoneListData
         }}>
             {children}
         </LoginContext.Provider>

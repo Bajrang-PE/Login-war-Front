@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import DataTable from 'react-data-table-component';
 import InputField from './InputField';
+import { LoginContext } from '../context/LoginContext';
 
 
 const GlobalTable = (props) => {
-
-    const { column, data, onAdd, onModify, onDelete, onView, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport, setOpenPage } = props;
+    const { selectedOption, setSelectedOption } = useContext(LoginContext);
+    const { column, data, onDelete, onReport, setSearchInput, isShowBtn, isAdd, isModify, isDelete, isView, isReport, setOpenPage, isSearch } = props;
 
     const tableCustomStyles = {
         headRow: {
@@ -33,24 +34,22 @@ const GlobalTable = (props) => {
 
                                     }}>
                                         <i className="fa fa-plus me-1 fs-13 text-success"></i>Add</button>}
-                                {isModify &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={() => {
-                                        setOpenPage('modify');
-                                    }}>
-                                        <i className="fa fa-edit me-1 fs-13 text-warning"></i>Modify</button>}
+                                {selectedOption?.length > 0 && (<>
+                                    {isModify &&
+                                        <button className='btn btn-sm datatable-btns py-0' onClick={() => {
+                                            setOpenPage('modify');
+                                        }}>
+                                            <i className="fa fa-edit me-1 fs-13 text-warning"></i>Modify</button>}
+                                    {isDelete &&
+                                        <button className='btn btn-sm datatable-btns py-0' onClick={onDelete}>
+                                            <i className="fa fa-trash me-1 fs-13 text-danger"></i>Delete</button>}
+                                    {isView &&
+                                        <button className='btn btn-sm datatable-btns py-0' onClick={() => {
+                                            setOpenPage('view');
+                                        }}>
+                                            <i className="fa fa-eye me-1 fs-13 text-info"></i>View</button>}
 
-                                {isDelete &&
-                                    <button className='btn btn-sm datatable-btns py-0' 
-                                     onClick={
-                                        ()=>{ setOpenPage('delete');}
-                                    }>
-                                        <i className="fa fa-trash me-1 fs-13 text-danger"></i>Delete</button>}
-
-                                {isView &&
-                                    <button className='btn btn-sm datatable-btns py-0' onClick={() => {
-                                        setOpenPage('view');
-                                    }}>
-                                        <i className="fa fa-eye me-1 fs-13 text-info"></i>View</button>}
+                                </>)}
                                 {isReport &&
                                     <button className='btn btn-sm datatable-btns py-0' onClick={onReport}>
                                         <i className="fa fa-file me-1 fs-13 text-warning"></i>Report</button>}
