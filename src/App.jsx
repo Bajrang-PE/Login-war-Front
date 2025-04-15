@@ -9,9 +9,8 @@ import DvdmsDashboard from './pages/DvdmsDashboard';
 import ChangeDvdmsPass from './pages/ChangeDvdmsPass';
 import ChangeUserDetails from './pages/ChangeUserDetails';
 import { ToastContainer } from 'react-toastify';
-import StateConfigCwh from './component/menus/admin/StateConfigCwh';
-import ZoneMaster from './component/menus/admin/ZoneMaster';
 import Menus from './pages/Menus';
+import Auth from './Auth';
 
 function App() {
 
@@ -20,12 +19,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/dvdms-central-dashboard" element={<DvdmsDashboard />} />
-          <Route path="/dvdms-change-password" element={<ChangeDvdmsPass />} />
-          <Route path="/dvdms-change-user" element={<ChangeUserDetails />} />
-        
+          <Route path="/dvdms-central-dashboard" element={<Auth comp={DvdmsDashboard} />} />
+          <Route path="/dvdms-change-password" element={<Auth comp={ChangeDvdmsPass} />} />
+          <Route path="/dvdms-change-user" element={<Auth comp={ChangeUserDetails} />} />
           {/* <Route path="/zone-master" element={<ZoneMaster />} /> */}
-          <Route path="/menus/*" element={<Menus />} />
+          <Route path="/menus/*" element={<Auth comp={Menus} />} />
         </Routes>
         <ToastContainer />
       </Router>

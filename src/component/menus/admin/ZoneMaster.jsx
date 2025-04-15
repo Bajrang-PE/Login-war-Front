@@ -11,10 +11,10 @@ const ZoneMaster = () => {
 
     const { selectedOption, setSelectedOption, openPage, setOpenPage, getZoneListData, zoneListData } = useContext(LoginContext);
     const [searchInput, setSearchInput] = useState('');
-    const [recordStatus, setRecordStatus] = useState('1')
+    const [recordStatus, setRecordStatus] = useState('Active')
 
     useEffect(() => {
-        getZoneListData(recordStatus)
+        getZoneListData(recordStatus === "Active" ? '1' : '0')
     }, [recordStatus])
 
     const handleRowSelect = (row) => {
@@ -105,7 +105,7 @@ const ZoneMaster = () => {
                                         id="recordStatus"
                                         name="recordStatus"
                                         placeholder="Select Status"
-                                        options={[{ value: 1, label: 'Active' }, { value: 0, label: 'InActive' }]}
+                                        options={[{ value: "Active", label: 'Active' }, { value: "InActive", label: 'InActive' }]}
                                         className="aliceblue-bg border-dark-subtle"
                                         value={recordStatus}
                                         onChange={(e) => { setRecordStatus(e.target.value) }}

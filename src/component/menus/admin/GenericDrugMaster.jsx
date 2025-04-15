@@ -6,6 +6,7 @@ import GlobalTable from '../../GlobalTable';
 import GenericDrugMasterForm from '../forms/admin/GenericDrugMasterForm';
 
 const GenericDrugMaster = () => {
+    
     const { selectedOption, setSelectedOption, openPage, setOpenPage, getZoneListData, zoneListData } = useContext(LoginContext);
     const [searchInput, setSearchInput] = useState('');
     const [recordStatus, setRecordStatus] = useState('1')
