@@ -4,7 +4,10 @@ import { Route, Router, Routes } from 'react-router-dom'
 import ZoneMaster from '../component/menus/admin/ZoneMaster'
 import StateConfigCwh from '../component/menus/admin/StateConfigCwh'
 import DrugTypeMaster from '../component/menus/admin/DrugTypeMaster'
+import DrugTypeForm from './DrugTypeForm'
 import StateMaster from '../component/menus/admin/StateMaster'
+import SupplierMaster from '../component/menus/admin/SupplierMaster'
+import SupplierMappingMaster from '../component/menus/admin/SupplierMappingMaster'
 import FacilityTypeMaster from '../component/menus/admin/FacilityTypeMaster'
 import GenericDrugMaster from '../component/menus/admin/GenericDrugMaster'
 import FacilityTypeMappingMaster from '../component/menus/admin/FacilityTypeMappingMaster'
@@ -19,6 +22,8 @@ const Menus = () => {
                 {/* created by Vishal */}
                 <Route path="state-config-cwh" element={<StateConfigCwh />} />
                 <Route path="drug-type-master" element={<DrugTypeMaster />} />
+                <Route path="supplier-master" element={<SupplierMaster />} />
+                <Route path="supplier-mapping-master" element={<SupplierMappingMaster />} />
 
                 {/* created by BG */}
                 <Route path="generic-drug-master" element={<GenericDrugMaster />} />

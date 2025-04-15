@@ -114,29 +114,29 @@ const StateConfigCwh = () => {
     const saveDetail = async (e) => {
         e.preventDefault(); // prevent form from refreshing the page
     
-        alert("clicked on save");
-    
+      
         const data = {
-        
-            "cwhnumStateId": values?.stateId,
-            "cwhstrStateUrl": values?.stateServiceUrl,
-            "cwhnumThreadpoolSize": values?.dataFetchSize,
-            "cwhstrDatabaseName": values?.dbName,
-            "numIsDataInsertByEtlWar": values?.insertMethodOnCentralServer,
-            "cwhnumServiceconnecttimeout": values?.serviceConnTimeout,
-            "cwhnumBatchsize": values?.dataFetchSize,
-            "cwhstrCentralserverurl": values?.centServiceUrl,
-            "cwhstrStateserviceusername": values?.stateServiceUserName,
-            "cwhstrStateservicepassword": values?.stateServicePass,
-            "cwhnumIsdbcedentialavailable": values?.isDbCredAvl,
-            "cwhstrDatabasedriverclassname": values?.dbDrivClass,
-            "cwhstrDatabaseurl": values?.dbUrl,
-            "cwhstrDatabaseusername":values?.dbUserName,
-            "cwhstrDatabasepassword": values?.dbPass
-        }
+            cwhnumStateId: values?.strStateId,
+            cwhstrStateUrl: values?.stateServiceUrl,
+            cwhnumThreadpoolSize: values?.dataFetchSize,
+            cwhstrDatabaseName: values?.dbName,
+            numIsDataInsertByEtlWar: values?.insertMethodOnCentralServer,
+            cwhnumServiceconnecttimeout: values?.serviceConnTimeout,
+            cwhnumBatchsize: values?.dataFetchSize,
+            cwhstrCentralserverurl: values?.centServiceUrl,
+            cwhstrStateserviceusername: values?.stateServiceUserName,
+            cwhstrStateservicepassword: values?.stateServicePass,
+            cwhnumIsdbcedentialavailable: values?.isDbCredAvl,
+            cwhstrDatabasedriverclassname: values?.dbDrivClass,
+            cwhstrDatabaseurl: values?.dbUrl,
+            cwhstrDatabaseusername: values?.dbUserName,
+            cwhstrDatabasepassword: values?.dbPass
+          };
     
             const response = await fetchUpdateData("/state/updateStateConfig", data);  
+            alert("Data Saved")
             console.log("===aftersave=="+response)
+            reset();
         
     }
     
@@ -152,7 +152,6 @@ const StateConfigCwh = () => {
 
     return (
         <div>
-            <DashHeader />
             <div className='text-left w-100 fw-bold p-1 heading-text' >State Configuration Master</div>
 
             <div className="row mt-3">

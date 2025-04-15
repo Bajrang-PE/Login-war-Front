@@ -17,6 +17,7 @@ const LoginContextApi = ({ children }) => {
     //dropdowns
     const [hintQuestionDrpDt, setHintQuestionDrpDt] = useState([]);
     const [stateNameDrpDt, setStateNameDrpDt] = useState([]);
+    const [supplierNameDrpDt, setSupplierNameDrpDt] = useState([]);
 
 
     const getWidgetData = () => {
@@ -70,6 +71,27 @@ const LoginContextApi = ({ children }) => {
         })
     }
 
+    const getSupplierNameDrpData = () => {
+        fetchData('/state/getstate').then((data) => {
+            if (data) {
+
+                const drpData = data?.map((dt) => {
+                    const val = {
+                        value: dt?.cwhnumStateId,
+                        label: dt?.cwhstrStateName
+                    }
+
+                    return val;
+                })
+
+                setSupplierNameDrpDt(drpData)
+
+            } else {
+                setSupplierNameDrpDt([])
+            }
+        })
+    }
+
     return (
         <LoginContext.Provider value={{
             widgetData, getWidgetData,
@@ -77,6 +99,7 @@ const LoginContextApi = ({ children }) => {
             showForgotPass, setShowForgotPass,
             getHintQuestionDrpData, hintQuestionDrpDt,
             getSteteNameDrpData, stateNameDrpDt,
+            getSupplierNameDrpData, supplierNameDrpDt,
             selectedOption, setSelectedOption,
             openPage, setOpenPage,
             getZoneListData, zoneListData

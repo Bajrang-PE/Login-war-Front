@@ -9,7 +9,7 @@ const StateMasterForm = () => {
 
     return (
         <div>
-            <GlobalButtons />
+            <GlobalButtons onSave={null}/>
             <hr className='my-2' />
             <div className='row pt-2'>
                 <div className='col-sm-6'>

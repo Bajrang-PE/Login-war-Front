@@ -91,6 +91,22 @@ export const fetchUpdateData = async (url, data) => {
         return error?.response?.data;
     }
 };
+
+export const fetchUpdatePostData = async (url, data) => {
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log('API Error:', error);
+        return error?.response?.data;
+    }
+};
+
+
 export const fetchDeleteData = async (url, data) => {
     try {
         const response = await axios.delete(url);
